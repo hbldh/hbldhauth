@@ -4,12 +4,19 @@
 A small wrapper around `pyotp` to provide tailored
 storage of Authenticator tokens.
 
+The tokens are intended to be stored on an encrypted partition or similar,
+enabling this authenticator to be used as a backup for the mobile-based one.
 
 Installation
 ------------
 
-```shell
+```bash
 $ pip install git+https://github.com/hbldh/hbldhauth.git@master
+```
+
+or use [pipsi](https://github.com/mitsuhiko/pipsi):
+```bash
+$ pipsi install git+https://github.com/hbldh/hbldhauth.git@master#egg=hbldhauth
 ```
 
 Usage
@@ -32,7 +39,7 @@ Sentry: ABCD EFGH IJKL MNOP QRST UVWX YZ23 4567
 ```
 
 Then run `hbldhauth`:
-```shell
+```bash
 $ hbldhauth
 --- hbldh Authenticator ---
 Valid for 17 seconds...
@@ -42,3 +49,5 @@ Discord: 998 725
 Sentry: 362 213
 
 ```
+
+
