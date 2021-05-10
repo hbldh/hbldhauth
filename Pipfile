@@ -3,12 +3,7 @@ url = "https://pypi.python.org/simple"
 name = "pypi"
 verify_ssl = true
 
-[requires]
-python_version = "3.5"
-
 [packages]
 pyotp = "*"
-
-
 
 [dev-packages]

@@ -2,7 +2,7 @@ import pathlib
 import datetime
 import pyotp
 
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 
 _PAGE_PARTS = [
     "<!DOCTYPE html>\n<html>\n  <body>\n    <h1>hbldhauth QR code page</h1>",
@@ -19,11 +19,6 @@ _FUNCTION_TEMPLATE = """
         });
       })();
 """
-
-
-def _get_token_path_from_config(path):
-    with open(path, 'r') as f:
-        return str(pathlib.Path(f.read().strip()))
 
 
 def read_tokens(path):
@@ -58,13 +53,12 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(prog='hbldhauth')
-    parser.add_argument('-c', '--config',
-                        default=str(pathlib.Path.home().joinpath('.hbldhauth')))
+    parser.add_argument('-t', '--tokens',
+                        default=str(pathlib.Path.home().joinpath('tokens')), required=True)
     parser.add_argument('--qr', action='store_true', help="Open a webpage with QR codes for provisioning.")
 
     args = parser.parse_args()
-    token_path = _get_token_path_from_config(args.config)
-    tokens = read_tokens(token_path)
+    tokens = read_tokens(args.tokens)
 
     if args.qr:
         import os
