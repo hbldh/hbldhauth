@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "termauth"
+version = "0.3.0"
+description = "TOTP Authenticator with configurable storage of tokens"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Henrik Blidh", email = "henrik.blidh@nedomkull.com" }
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy"
+]
+dependencies = [
+    "textual",
+    "pyotp"
+]
+
+[project.urls]
+homepage = "https://github.com/hbldh/hbldhauth"
+
+[project.scripts]
+termauth = "termauth.app:main"
+hbldhauth = "termauth.staticapp:main"

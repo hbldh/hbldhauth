@@ -2,7 +2,7 @@ import pathlib
 import datetime
 import pyotp
 
-__version__ = '0.3.0'
+from termauth.utils import read_tokens, now
 
 _PAGE_PARTS = [
     "<!DOCTYPE html>\n<html>\n  <body>\n    <h1>hbldhauth QR code page</h1>",
@@ -19,22 +19,6 @@ _FUNCTION_TEMPLATE = """
         });
       })();
 """
-
-
-def read_tokens(path):
-    with open(path, 'r') as f:
-        out = []
-        for line in f.read().strip().splitlines(keepends=False):
-            issuer_and_account, token = tuple(map(str.strip, line.split(':')))
-            issuer, account = map(str.strip, issuer_and_account.split('|'))
-            out.append((issuer, account, token.replace(' ', '')))
-    return tuple(out)
-
-
-def now(s):
-    otp = pyotp.TOTP(s.replace(' ', '')).now()
-    return " ".join([str(otp)[:3], str(otp)[3:]])
-
 
 def qr_uri(issuer, account, token):
     return pyotp.totp.TOTP(token).provisioning_uri(account, issuer_name=issuer)
@@ -54,7 +38,7 @@ def main():
 
     parser = argparse.ArgumentParser(prog='hbldhauth')
     parser.add_argument('-t', '--tokens',
-                        default=str(pathlib.Path.home().joinpath('tokens')), required=True)
+                        default=str(pathlib.Path.home().joinpath('.hbldhauth')))
     parser.add_argument('--qr', action='store_true', help="Open a webpage with QR codes for provisioning.")
 
     args = parser.parse_args()
